@@ -4,74 +4,77 @@
   <meta charset="UTF-8">
   <title>Mateus Markets Hub</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #0b1019; color: #f4f4f8; margin: 0; padding: 0; }
-    header { background: #121a2b; padding: 20px; text-align: center; }
-    h1 { margin: 0; }
-    .container { padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
-    .card { background: #161f33; border-radius: 8px; padding: 16px; box-shadow: 0 0 12px rgba(0,0,0,0.4); }
-    .card h2 { margin-top: 0; color: #4dd0e1; }
-    ul { padding-left: 18px; }
+    body { font-family: "Inter", Arial, sans-serif; background: #080d18; color: #f4f4f8; margin: 0; }
+    header { background: linear-gradient(135deg, #111b2f, #131f3e); padding: 24px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+    h1 { margin: 0; font-size: 2rem; }
+    .container { padding: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 20px; }
+    .card { background: #121b2f; border-radius: 12px; padding: 20px; box-shadow: 0 6px 24px rgba(0,0,0,0.4); }
+    .card h2 { margin-top: 0; color: #4dd0e1; font-size: 1.2rem; }
+    ul.tree { list-style: none; padding-left: 20px; position: relative; }
+    ul.tree::before { content: ''; border-left: 1px solid rgba(255,255,255,0.2); position: absolute; top: 0; bottom: 0; left: 9px; }
+    ul.tree li { position: relative; margin: 0 0 12px 20px; }
+    ul.tree li::before { content: ''; position: absolute; left: -20px; top: 8px; width: 20px; border-top: 1px solid rgba(255,255,255,0.2); }
+    .tag { border-radius: 4px; padding: 2px 8px; font-size: 0.8rem; margin-right: 6px; display: inline-block; }
+    .done { background: #2e7d32; }
+    .wip { background: #f9a825; color: #111; }
+    .todo { background: #c62828; }
     code { background: #0f1624; padding: 2px 4px; border-radius: 4px; }
-    .status { display: flex; flex-wrap: wrap; gap: 6px; }
-    .tag { border-radius: 4px; padding: 2px 8px; font-size: 0.85em; }
-    .tag.done { background: #2e7d32; }
-    .tag.todo { background: #c62828; }
-    .tag.wip { background: #f9a825; color: #121212; }
   </style>
 </head>
 <body>
   <header>
     <h1>Mateus Markets Hub</h1>
-    <p>Visão rápida do que já foi feito e o que está em andamento.</p>
+    <p>Mapa visual de tudo que está feito, em andamento e por vir.</p>
   </header>
   <div class="container">
     <section class="card">
-      <h2>Cripto (BTC &amp; BNB)</h2>
-      <div class="status">
-        <span class="tag done">Infra inicial OK</span>
-        <span class="tag wip">Histórico 5 anos</span>
-        <span class="tag todo">API Binance</span>
-      </div>
-      <ul>
-        <li>Scripts base criados em <code>projects/markets/</code>.</li>
-        <li>Aguardando fonte de dados liberada (Binance API ou export TradingView).</li>
-        <li>Pronto para calcular MAs, MACD, RSI assim que tiver os arquivos CSV.</li>
+      <h2>Cripto · BTC &amp; BNB</h2>
+      <ul class="tree">
+        <li><span class="tag done">feito</span> Scripts base (<code>download_binance_data.sh</code>, <code>merge_csv</code>, <code>indicators</code>)</li>
+        <li><span class="tag done">feito</span> BTCUSDT 1d · 2024 baixado (via data.binance.vision)</li>
+        <li><span class="tag wip">fazendo</span> BTCUSDT 1d · consolidação + indicadores
+          <ul class="tree">
+            <li>Merge CSV 2024</li>
+            <li>Cálculo EMA/MACD/RSI</li>
+            <li>Export JSON → feed do relatório</li>
+          </ul>
+        </li>
+        <li><span class="tag todo">próximo</span> BNBUSDT 1d · 2024 (download + indicadores)</li>
+        <li><span class="tag todo">próximo</span> Integração API Binance (quando IP liberado)</li>
       </ul>
     </section>
 
     <section class="card">
       <h2>Bolsa de Valores</h2>
-      <div class="status">
-        <span class="tag wip">Template DARF</span>
-        <span class="tag todo">Lista ativos B3</span>
-      </div>
-      <ul>
-        <li>Estrutura preparada para registrar trades e calcular DARF.</li>
-        <li>Aguardando lista de empresas para iniciar análise mensal.</li>
-        <li>Alertas fiscais vão sair pelo Telegram quando houver lucros tributáveis.</li>
+      <ul class="tree">
+        <li><span class="tag wip">fazendo</span> Template DARF automático</li>
+        <li><span class="tag todo">pendente</span> Lista de empresas-alvo (para iniciar análises)</li>
+        <li><span class="tag todo">pendente</span> Rotina mensal com alertas de imposto</li>
       </ul>
     </section>
 
     <section class="card">
       <h2>Alertas &amp; Relatórios</h2>
-      <div class="status">
-        <span class="tag todo">Template Telegram</span>
-      </div>
-      <ul>
-        <li>Alertas serão enviados aqui no Telegram.</li>
-        <li>Relatórios diários (Cripto) e mensais (B3) serão anexados nesta dashboard.</li>
-        <li>Pronto para conectar scripts &rarr; HTML assim que os dados começarem a sair.</li>
+      <ul class="tree">
+        <li><span class="tag wip">fazendo</span> Template de alerta Telegram
+          <ul class="tree">
+            <li>Resumo diário Cripto (tendência, gatilho 5%)</li>
+            <li>Alertas DARF (quando houver lucro tributável)</li>
+          </ul>
+        </li>
+        <li><span class="tag todo">pendente</span> Relatório de volume (modelo Binance)</li>
+        <li><span class="tag todo">pendente</span> Gráficos/links no dashboard</li>
       </ul>
     </section>
 
     <section class="card">
-      <h2>Próximos passos</h2>
-      <ol>
-        <li>Receber fonte de dados históricos + chave API Binance.</li>
-        <li>Carregar CSVs (5 anos) e gerar indicadores automáticos.</li>
-        <li>Montar modelo de análise por volume conforme referência Binance.</li>
-        <li>Criar template de alerta com resumo/entrada/saída.</li>
-      </ol>
+      <h2>Roadmap</h2>
+      <ul class="tree">
+        <li><span class="tag done">feito</span> Dashboard publicado: <a style="color:#4dd0e1" href="https://opersistente.github.io/markets-dashboard/" target="_blank">GitHub Pages</a></li>
+        <li><span class="tag wip">fazendo</span> Consolidar BTC 2024 + indicadores</li>
+        <li><span class="tag todo">pendente</span> BNB 2024 + indicadores</li>
+        <li><span class="tag todo">pendente</span> Modelo de análise por volume → alertas automáticos</li>
+      </ul>
     </section>
   </div>
 </body>
